@@ -7,4 +7,4 @@ import startServer from './start'
 // const logLevel = process.env.LOG_LEVEL || (notTest ? 'info' : 'warn')
 
 
-startServer( process.env.PORT || 8000)
+startServer( process.env.PORT || 3000)
