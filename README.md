@@ -90,6 +90,7 @@ Return
   {
     "message": "Registration successful",
     "patient_id": number,
+    "username": “string",
     "token": “abcd"
   }
 
@@ -158,6 +159,7 @@ Return
   {
     "message": "Registration successful",
     "staff_id": number,
+    "username": “string",
     "token": “abcd"
   }
 
