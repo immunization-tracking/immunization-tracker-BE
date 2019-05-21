@@ -36,9 +36,19 @@ var _immunization_edit_requests = require('./immunization_edit_requests');
 
 var _immunization_edit_requests2 = _interopRequireDefault(_immunization_edit_requests);
 
+var _auth = require('../utils/auth');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+const serverErrorHandler = require('../middlewares/errorHandlers/serverErrorHandler');
+const verifyRequestBodyOnRegister = require('../middlewares/errorHandlers/auth/verifyRequestBodyOnPatientRegister');
+const verifyRequestBodyOnLogin = require('../middlewares/errorHandlers/auth/verifyRequestBodyOnPatientLogin');
+
+
 function setupRoutes(app) {
+	// protected route
+	// app.use('/api', protect)
+
 	// Staffs
 	const staffRouter = _express2.default.Router();
 	(0, _staffs2.default)(staffRouter);
@@ -73,6 +83,9 @@ function setupRoutes(app) {
 	const editRequestRouter = _express2.default.Router();
 	(0, _immunization_edit_requests2.default)(editRequestRouter);
 	app.use('/api/immunization_edit_requests', editRequestRouter);
+
+	app.post('/register', verifyRequestBodyOnRegister, serverErrorHandler(_auth.register));
+	app.post('/login', verifyRequestBodyOnLogin, serverErrorHandler(_auth.login));
 
 	app.get('/', async (req, res) => {
 		console.log('root route called');

@@ -8,10 +8,4 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 require('dotenv').config();
 
-//
-// const notTest = process.env.NODE_ENV !== 'test'
-// const isProduction = process.env.NODE_ENV !== 'production'
-// const logLevel = process.env.LOG_LEVEL || (notTest ? 'info' : 'warn')
-
-
-(0, _start2.default)(process.env.PORT || 8000);
+(0, _start2.default)(process.env.PORT || 3000);
