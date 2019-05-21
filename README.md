@@ -1,7 +1,7 @@
 # Immunization Tracker - Back End
 
-Getting the most updated immunization records for you and your families can be a very confusing and time consuming process. But it does not have to be.
-Out Immunization Tracking App allows parents to request and their children’s immunization records as well as their own, with a click of a button
+Getting immunization records for you and your families can be a confusing and time consuming process. But it does not have to be!
+Out Immunization Tracking App allows parents to track their children’s immunization records, as well as theirs, with a click of a button
 
 - Designed by Yilun Weng https://github.com/wengellen
 
