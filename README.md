@@ -1,8 +1,9 @@
 # Immunization Tracker - Back End
 
-Mentor me app let entrepreneurs who are just starting out or small business owners to ask for advices or guidances on various business topics from (qualified) business professionals working in the industries for free.
+Getting the most updated immunization records for you and your families can be a very confusing and time consuming process. But it does not have to be.
+Out Immunization Tracking App allows parents to request and their children’s immunization records as well as their own, with a click of a button
 
-- Designed by Alex King https://github.com/wengellen
+- Designed by Yilun Weng https://github.com/wengellen
 
 ## Technology Used
 
