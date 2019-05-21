@@ -7,13 +7,15 @@ import setupImmunizationRecordRoutes from './immunization_records'
 import setupVaccineDosesSchedulesRoutes from './vaccine_doses_schedules'
 import setupImmunizationEditRequestRoutes from './immunization_edit_requests'
 
-
 const serverErrorHandler = require('../middlewares/errorHandlers/serverErrorHandler');
-const verifyRequestBodyOnRegister = require('../middlewares/errorHandlers/patients/verifyRequestBodyOnPatientRegister');
-const verifyRequestBodyOnLogin = require('../middlewares/errorHandlers/patients/verifyRequestBodyOnPatientLogin');
+const verifyRequestBodyOnRegister = require('../middlewares/errorHandlers/auth/verifyRequestBodyOnPatientRegister');
+const verifyRequestBodyOnLogin = require('../middlewares/errorHandlers/auth/verifyRequestBodyOnPatientLogin');
 import { register, login, protect } from '../utils/auth'
 
 function setupRoutes(app){
+	// protected route
+// app.use('/api', protect)
+	
 	// Staffs
 	const staffRouter = express.Router()
 	setupStaffRoutes(staffRouter)

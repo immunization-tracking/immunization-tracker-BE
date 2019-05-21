@@ -3,8 +3,8 @@ import config from '../config'
 import jwt from 'jsonwebtoken'
 const bcrypt = require('bcryptjs');
 
-export const newToken = user => {
-  return jwt.sign({ id: user.id }, config.secrets.jwt, {
+export const newToken = (user, tbl) => {
+  return jwt.sign({ id: user.id , tbl}, config.secrets.jwt, {
     expiresIn: config.secrets.jwtExp
   })
 }
@@ -29,20 +29,19 @@ export const register = async (req, res) => {
 }
 
 export const login = async (req, res) => {
-  const role = getRoleTable(req)
+  const tbl = getRoleTable(req)
   
   // Does the user exist
   const {username, password} = req.body
-  const userFound = await db(role).where({ username: username}).first()
+  const userFound = await db(tbl).where({ username: username}).first()
   
   // Does the password match
   const hashMatched = await bcrypt.compare(password, userFound.password)
   if (userFound && hashMatched) {
-     const token = newToken(userFound)
+     const token = newToken(userFound, tbl)
      return res.status(200).json(
      {
         userId: userFound.id,
-        username: userFound.username,
         token
       })
   }else{
@@ -52,29 +51,21 @@ export const login = async (req, res) => {
 
 
 export const protect = async (req, res, next) => {
-  // const bearer = req.headers.authorization
+  const token = req.headers.authorization
+  let payload
+  try {
+    payload = await verifyToken(token)
+  } catch (e) {
+    return res.status(401).json({message:e})
+  }
   //
-  // if (!bearer || !bearer.startsWith('Bearer ')) {
-  //   return res.status(401).end()
-  // }
-  //
-  // const token = bearer.split('Bearer ')[1].trim()
-  // let payload
-  // try {
-  //   payload = await verifyToken(token)
-  // } catch (e) {
-  //   return res.status(401).end()
-  // }
-  //
-  // const user = await User.findById(payload.id)
-  //   .select('-password')
-  //   .lean()
-  //   .exec()
-  //
-  // if (!user) {
-  //   return res.status(401).end()
-  // }
-  //
-  // req.user = user
-  // next()
+  const tbl = payload.tbl
+  const user = await db(tbl).where({id:payload.id})
+
+  if (!user) {
+    return res.status(401).json({message:e})
+  }
+
+  req.user = user
+  next()
 }
