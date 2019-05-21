@@ -68,24 +68,23 @@ export const getFamiliesByEmail = model => async (req, res) => {
     }
 };
 
-export const getRecordsByPatientId = model => async (req, res) => {
-    const items = await db(model)
-                    .where({patient_id:req.params.id})
-                    
-    if (items.length > 0){
-        res.status(201).json(items)
-    }else{
-        res.status(404).json({ message: 'this record does not exist' });
-    }
-};
+// export const getRecordsByPatientId = model => async (req, res) => {
+//     const items = await db(model)
+//                     .where({patient_id:req.params.id})
+//
+//     if (items.length > 0){
+//         res.status(201).json(items)
+//     }else{
+//         res.status(404).json({ message: 'this record does not exist' });
+//     }
+// };
 
 
 export const getImmunizationRecords = model => async (req, res) => {
     const vaccineTemplate = await db('vaccine_doses_schedules as v')
-    // .where({patient_id: req.params.patient_id})
-    .join('immunization_records as i', 'i.vaccine_dose_id', 'v.id')
-    .join('clinics as c', 'i.clinic_id', 'c.id')
-    .join('vaccines as n', 'v.vaccine_id', 'n.id')
+    .leftJoin('immunization_records as i', 'i.vaccine_dose_id', 'v.id')
+    .leftJoin('clinics as c', 'i.clinic_id', 'c.id')
+    .leftJoin('vaccines as n', 'v.vaccine_id', 'n.id')
     .select(
         'v.id as vaccine_does_id',
         'n.fullname as vaccine_name',
@@ -97,38 +96,50 @@ export const getImmunizationRecords = model => async (req, res) => {
         'i.patient_id',
         'i.id as immunization_record_id',
         'i.note',
-
-        // 'c.name as clinic_name',
-        // 'c.phone as clinic_phone',
-        // 'c.address as clinic_address',
-    );
-    
-    const patientRecords = await db('immunization_records as i')
-                                .where({patient_id: req.params.patient_id})
-                                .join('vaccine_doses_schedules as v', 'i.vaccine_dose_id', 'v.id')
-                                .join('clinics as c', 'i.clinic_id', 'c.id')
-                                .join('vaccines as n', 'v.vaccine_id', 'n.id')
-                                .select(
-                                    'i.id as immunization_record',
-                                    'i.received_date',
-                                    'i.note',
-                                    'i.patient_id',
-                                    'i.vaccine_dose_id',
-                                    'v.dose_number',
-                                    'v.due_month',
-                                    'n.fullname as vaccine_name',
-                                    'i.clinic_id',
-                                    'c.name as clinic_name',
-                                    'c.phone as clinic_phone',
-                                    'c.address as clinic_address',
-                                );
-    
-    console.log('patientRecords', vaccineTemplate)
-    // const items = await db(model)
-    //   .where({patient_id:req.params.patient_id})
-    //
-    if (patientRecords.length > 0){
+       
+    )
+    .where({patient_id: req.params.patient_id})
+    .orWhere({immunization_record_id:null})
+    if (vaccineTemplate.length > 0){
         res.status(201).json(vaccineTemplate)
+    }else{
+        res.status(404).json({ message: 'this record does not exist' });
+    }
+};
+
+
+
+export const getImmunizationEditRequests = model => async (req, res) => {
+    const staff = await db('staffs')
+    .where({id:req.params.staff_id})
+    .first()
+    
+    console.log('req.params.staff_id', staff)
+    
+    const editRequests = await db('immunization_edit_requests as i')
+    .join('clinics as c', 'i.clinic_id', 'c.id')
+    .join('patients as p', 'p.id', 'i.patient_id')
+    .join('vaccine_doses_schedules as v', 'v.id', 'i.vaccine_dose_id')
+    .join('vaccines as n', 'n.id', 'v.vaccine_id')
+    .select(
+        'i.id as record_update_requests_id',
+        'i.patient_id',
+        'p.username as patient_username',
+        'p.first_name as patient_first_name',
+        'p.last_name as patient_last_name',
+        'v.id as vaccine_dose_id',
+        'n.fullname as vaccine_name',
+        'v.dose_number as vaccine_dose_number',
+        'v.due_month as vaccine_dose_month',
+        'c.id as appointed_clinic_id',
+        'c.name as appointed_clinic',
+        'i.note as update_request_note',
+        
+    )
+    .where({clinic_id: staff.clinic_id})
+    
+    if (editRequests.length > 0){
+        res.status(201).json(editRequests)
     }else{
         res.status(404).json({ message: 'this record does not exist' });
     }
@@ -144,5 +155,6 @@ export const crudControllers = model => ({
   createOne: createOne(model),
   getManyByProps:getManyByProps(model),
   getFamiliesByEmail:getFamiliesByEmail(model),
-    getImmunizationRecords:getImmunizationRecords(model)
+  getImmunizationRecords:getImmunizationRecords(model),
+  getImmunizationEditRequests:getImmunizationEditRequests(model)
 })

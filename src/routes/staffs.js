@@ -8,6 +8,7 @@ const serverErrorHandler = require('../middlewares/errorHandlers/serverErrorHand
 function setupStaffRoutes(router){
 	console.log('staffController', serverErrorHandler(staffController))
 	router.get("/", serverErrorHandler(staffController.getMany))
+	router.get("/:staff_id/immunization_edit_requests", serverErrorHandler(staffController.getImmunizationEditRequests))
 	router.post('/', verifyAddingStaffs, serverErrorHandler(staffController.createOne))
 	router.get('/:id', serverErrorHandler(staffController.getOne))
 	router.put('/:id', verifyUpdatingStaffs, serverErrorHandler(staffController.updateOne))
