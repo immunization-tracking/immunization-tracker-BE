@@ -8,6 +8,11 @@ import setupVaccineDosesSchedulesRoutes from './vaccine_doses_schedules'
 import setupImmunizationEditRequestRoutes from './immunization_edit_requests'
 
 
+const serverErrorHandler = require('../middlewares/errorHandlers/serverErrorHandler');
+const verifyRequestBodyOnRegister = require('../middlewares/errorHandlers/patients/verifyRequestBodyOnPatientRegister');
+const verifyRequestBodyOnLogin = require('../middlewares/errorHandlers/patients/verifyRequestBodyOnPatientLogin');
+import { register, login, protect } from '../utils/auth'
+
 function setupRoutes(app){
 	// Staffs
 	const staffRouter = express.Router()
@@ -43,6 +48,9 @@ function setupRoutes(app){
 	const editRequestRouter = express.Router()
 	setupImmunizationEditRequestRoutes(editRequestRouter)
 	app.use('/api/immunization_edit_requests', editRequestRouter)
+	
+	app.post('/register', verifyRequestBodyOnRegister, serverErrorHandler(register))
+	app.post('/login', verifyRequestBodyOnLogin, serverErrorHandler(login))
 	
 	app.get('/', async (req, res) => {
 		console.log('root route called')

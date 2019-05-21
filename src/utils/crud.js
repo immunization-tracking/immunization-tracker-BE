@@ -1,4 +1,6 @@
 import db from './db'
+
+
 export const getOne = model => async (req, res) => {
     const items = await db(model)
           .where({id:req.params.id})
@@ -51,15 +53,7 @@ export const removeOne = model => async (req, res) => {
     }
 }
 
-export const registerUser = model => async (req, res) => {
-    const lastId = await db(model).insert(req.body)
-    res.status(201).json(lastId)
-};
 
-export const loginUser = model => async (req, res) => {
-    const lastId = await db(model).insert(req.body)
-    res.status(201).json(lastId)
-};
 
 export const getFamiliesByEmail = model => async (req, res) => {
     const items = await db(model)
@@ -74,6 +68,28 @@ export const getFamiliesByEmail = model => async (req, res) => {
     }
 };
 
+export const getRecordsByPatientId = model => async (req, res) => {
+    const items = await db(model)
+                    .where({patient_id:req.params.id})
+                    
+    if (items.length > 0){
+        res.status(201).json(items)
+    }else{
+        res.status(404).json({ message: 'this record does not exist' });
+    }
+};
+
+// Auth
+export const registerUser = (model) => async (req, res) => {
+	const lastId = await db(model).insert(req.body)
+	res.status(201).json(lastId)
+};
+
+export const loginUser = model => async (req, res) => {
+	const lastId = await db(model).insert(req.body)
+	res.status(201).json(lastId)
+};
+
 export const crudControllers = model => ({
   removeOne: removeOne(model),
   updateOne: updateOne(model),
@@ -83,5 +99,6 @@ export const crudControllers = model => ({
   registerUser: registerUser(model),
   loginUser: loginUser(model),
   getManyByProps:getManyByProps(model),
-  getFamiliesByEmail:getFamiliesByEmail(model)
+  getFamiliesByEmail:getFamiliesByEmail(model),
+  getRecordsByPatientId:getRecordsByPatientId(model)
 })
