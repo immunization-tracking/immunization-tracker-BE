@@ -1,6 +1,5 @@
 import db from './db'
 
-
 export const getOne = model => async (req, res) => {
     const items = await db(model)
           .where({id:req.params.id})
@@ -62,6 +61,7 @@ export const getFamiliesByEmail = model => async (req, res) => {
     if (items.length > 0){
         const families = await db(model)
         .where({email:items[0].email})
+        
         res.status(201).json(families)
     }else{
         res.status(404).json({ message: 'this record does not exist' });
