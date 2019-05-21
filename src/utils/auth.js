@@ -43,13 +43,13 @@ export const login = async (req, res) => {
      const patient =  {
          message: "Registration successful",
          patient_id: userFound.id,
-         username: userFound.userName,
+         username,
          token
       }
      const staff =  {
           message: "Registration successful",
           staff_id: userFound.id,
-          username: userFound.userName,
+          username,
          token
       }
       return res.status(200).json(tbl === 'staffs' ? staff : patient)
