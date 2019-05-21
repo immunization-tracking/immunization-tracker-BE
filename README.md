@@ -165,13 +165,13 @@ Return
 ```
 
 ### Get family members - GET - RESTRICTED
-https://immunization-tracker-backend.herokuapp.com/api/patients/:id
+https://immunization-tracker-backend.herokuapp.com/api/patients/:patient_id
 
 
 ```
 Parameter : 
 
-"patient_id": "number"
+"patient_id": "number"  
 
 ```
 
@@ -193,54 +193,8 @@ Return
   ]
 ```
 
-
-### Get immunization records by patient_id - GET - RESTRICTED
-https://immunization-tracker-backend.herokuapp.com/api/patients/:id/immunization_records/
-
-
-```
-Parameter : 
-
-"patient_id": "number"
-
-```
-
-```
-Return
-  [
-	{
-	   ...
-	},
-	...
-  ]
-```
-
-
-
-### UPDATE immunization records - UPDATE - RESTRICTED
-https://immunization-tracker-backend.herokuapp.com/api/immunization_records/:id
-
-
-```
-Parameter : 
-
-"vaccine_dose_id": "number"
-
-```
-
-```
-Return
-  [
-	{
-	   ...
-	},
-	...
-  ]
-```
-
-
 ## Update patient profile by id - UPDATE - RESTRICTED
-https://immunization-tracker-backend.herokuapp.com/api/patients/:id
+https://immunization-tracker-backend.herokuapp.com/api/patients/:patient_id
 
 
 ```
@@ -260,7 +214,7 @@ Return
 
 
 ## Delete patient by id - DELETE - RESTRICTED
-https://immunization-tracker-backend.herokuapp.com/api/patients/:id
+https://immunization-tracker-backend.herokuapp.com/api/patients/:patient_id
 
 
 ```
@@ -278,4 +232,51 @@ Return
   }
 ```
 
+
+
+## Immunization Records Endpoints
+
+### Get immunization records by patient_id - GET - RESTRICTED
+https://immunization-tracker-backend.herokuapp.com/api/patients/:patient_id/immunization_records/
+
+
+```
+Parameter : 
+
+"patient_id": "number" 
+
+```
+
+```
+Return
+  [
+	{
+	   ...
+	},
+	...
+  ]
+```
+
+
+### UPDATE immunization records - UPDATE - RESTRICTED
+https://immunization-tracker-backend.herokuapp.com/api/patients/:patient_id/immunization_records/:vaccine_dose_id
+
+
+```
+Parameter : 
+
+"patient_id": "number"  
+"vaccine_dose_id": "number"
+
+```
+
+```
+Return
+  [
+	{
+	   ...
+	},
+	...
+  ]
+```
 
