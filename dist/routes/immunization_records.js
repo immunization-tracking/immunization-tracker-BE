@@ -17,7 +17,7 @@ const serverErrorHandler = require('../middlewares/errorHandlers/serverErrorHand
 function setupImmunizationRecordRoutes(router) {
 	router.get("/", serverErrorHandler(_immunization_records2.default.getMany));
 	router.post('/', verifyAddingImmunizationRecords, serverErrorHandler(_immunization_records2.default.createOne));
-	router.get('/:id', serverErrorHandler(_immunization_records2.default.getRecordsByPatientId));
+	// router.get('/:id', serverErrorHandler(_immunization_records2.default.getRecordsByPatientId));
 	router.put('/:id', verifyUpdatingImmunizationRecords, serverErrorHandler(_immunization_records2.default.updateOne));
 	router.delete('/:id', serverErrorHandler(_immunization_records2.default.removeOne));
 }

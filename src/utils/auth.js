@@ -37,13 +37,20 @@ export const login = async (req, res) => {
   
   // Does the password match
   const hashMatched = await bcrypt.compare(password, userFound.password)
+  
   if (userFound && hashMatched) {
      const token = newToken(userFound, tbl)
-     return res.status(200).json(
-     {
-        userId: userFound.id,
-        token
-      })
+     const patient =  {
+         message: "Registration successful",
+         patient_id: userFound.id,
+         token
+      }
+     const staff =  {
+          message: "Registration successful",
+          staff_id: userFound.id,
+          token
+      }
+      return res.status(200).json(tbl === 'staffs' ? staff : patient)
   }else{
       return res.status(401).json({message:"You do not have the correct credential"})
   }

@@ -79,16 +79,62 @@ export const getRecordsByPatientId = model => async (req, res) => {
     }
 };
 
-// Auth
-export const registerUser = (model) => async (req, res) => {
-	const lastId = await db(model).insert(req.body)
-	res.status(201).json(lastId)
+
+export const getImmunizationRecords = model => async (req, res) => {
+    const vaccineTemplate = await db('vaccine_doses_schedules as v')
+    // .where({patient_id: req.params.patient_id})
+    .join('immunization_records as i', 'i.vaccine_dose_id', 'v.id')
+    .join('clinics as c', 'i.clinic_id', 'c.id')
+    .join('vaccines as n', 'v.vaccine_id', 'n.id')
+    .select(
+        'v.id as vaccine_does_id',
+        'n.fullname as vaccine_name',
+        'v.dose_number as vaccine_dose_number',
+        'v.due_month as vaccine_dose_month',
+        'i.received_date as vaccine_received_date',
+        'c.name as vaccine_administer_clinic',
+        'i.clinic_id',
+        'i.patient_id',
+        'i.id as immunization_record_id',
+        'i.note',
+
+        // 'c.name as clinic_name',
+        // 'c.phone as clinic_phone',
+        // 'c.address as clinic_address',
+    );
+    
+    const patientRecords = await db('immunization_records as i')
+                                .where({patient_id: req.params.patient_id})
+                                .join('vaccine_doses_schedules as v', 'i.vaccine_dose_id', 'v.id')
+                                .join('clinics as c', 'i.clinic_id', 'c.id')
+                                .join('vaccines as n', 'v.vaccine_id', 'n.id')
+                                .select(
+                                    'i.id as immunization_record',
+                                    'i.received_date',
+                                    'i.note',
+                                    'i.patient_id',
+                                    'i.vaccine_dose_id',
+                                    'v.dose_number',
+                                    'v.due_month',
+                                    'n.fullname as vaccine_name',
+                                    'i.clinic_id',
+                                    'c.name as clinic_name',
+                                    'c.phone as clinic_phone',
+                                    'c.address as clinic_address',
+                                );
+    
+    console.log('patientRecords', vaccineTemplate)
+    // const items = await db(model)
+    //   .where({patient_id:req.params.patient_id})
+    //
+    if (patientRecords.length > 0){
+        res.status(201).json(vaccineTemplate)
+    }else{
+        res.status(404).json({ message: 'this record does not exist' });
+    }
 };
 
-export const loginUser = model => async (req, res) => {
-	const lastId = await db(model).insert(req.body)
-	res.status(201).json(lastId)
-};
+
 
 export const crudControllers = model => ({
   removeOne: removeOne(model),
@@ -96,9 +142,7 @@ export const crudControllers = model => ({
   getMany: getMany(model),
   getOne: getOne(model),
   createOne: createOne(model),
-  registerUser: registerUser(model),
-  loginUser: loginUser(model),
   getManyByProps:getManyByProps(model),
   getFamiliesByEmail:getFamiliesByEmail(model),
-  getRecordsByPatientId:getRecordsByPatientId(model)
+    getImmunizationRecords:getImmunizationRecords(model)
 })

@@ -9,6 +9,7 @@ const serverErrorHandler = require('../middlewares/errorHandlers/serverErrorHand
 function setupPatientRoutes(router){
 	router.get("/", serverErrorHandler(patientController.getMany))
 	router.get("/:id", serverErrorHandler(patientController.getFamiliesByEmail))
+	router.get("/:patient_id/immunization_records/", serverErrorHandler(patientController.getImmunizationRecords))
 	router.post('/', verifyAddingPatients, serverErrorHandler(patientController.createOne))
 	router.put('/:id', verifyUpdatingPatients, serverErrorHandler(patientController.updateOne))
 	router.delete('/:id', serverErrorHandler(patientController.removeOne))
