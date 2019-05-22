@@ -57,7 +57,7 @@ Argument
 Return
 {
 "message": "Registration successful",
-"patient_id": number,
+"lastId": number,
 }
  
  Database generates id and timestamp.
@@ -88,7 +88,7 @@ Arguments
 ```
 Return
   {
-    "message": "Registration successful",
+    "message": "Login successful",
     "patient_id": number,
     "username": “string",
     "token": “abcd"
@@ -128,7 +128,7 @@ Argument
 Return
 {
 "message": "Registration successful",
-"staff_id": number,
+"lastId": number,
 }
  
  Database generates id and timestamp.
@@ -157,7 +157,7 @@ Arguments
 ```
 Return
   {
-    "message": "Registration successful",
+    "message": "Login successful",
     "staff_id": number,
     "username": “string",
     "token": “abcd"

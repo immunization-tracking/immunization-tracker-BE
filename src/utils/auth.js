@@ -24,8 +24,8 @@ function getRoleTable(req){
 export const register = async (req, res) => {
   const role = getRoleTable(req)
   const hash = bcrypt.hashSync(req.body.password, 8)
-  const user = await db(role).insert({...req.body, password:hash}, 'id')
-  return res.status(201).json(user)
+  const lastId = await db(role).insert({...req.body, password:hash}, 'id')
+  return res.status(201).json({ message: "Registration successful", lastId:lastId[0]})
 }
 
 export const login = async (req, res) => {
@@ -41,13 +41,13 @@ export const login = async (req, res) => {
   if (userFound && hashMatched) {
      const token = newToken(userFound, tbl)
      const patient =  {
-         message: "Registration successful",
+         message: "Login successful",
          patient_id: userFound.id,
          username,
          token
       }
      const staff =  {
-          message: "Registration successful",
+          message: "Login successful",
           staff_id: userFound.id,
           username,
          token
