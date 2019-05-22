@@ -268,9 +268,39 @@ Return
 ```
 
 
+### Get patient immunization records - GET - RESTRICTED
+https://immunization-tracker-backend.herokuapp.com/api/patients/:patient_id/immunization_records/
+
+```
+Parameter : 
+
+"patient_id": "number" 
+
+```
+
+```
+Return
+  [
+	 {
+            "vaccine_does_id":  "number",
+            "vaccine_name": "string",  
+            "vaccine_dose_number":  "number",
+            "vaccine_dose_month":  "number",
+            "vaccine_received_date": "date"
+            "vaccine_administer_clinic": "string",  
+            "clinic_id":  "number",
+            "patient_id":  "number",
+            "immunization_record_id":  "number",
+            "note": "string",  
+          },
+	...
+  ]
+```
+
+
 ## Clinic / Staffs Endpoints
 
-### Get patient immunization records edit requests - GET - RESTRICTED
+### Get patient immunization records edit requests by Clinic - GET - RESTRICTED
 https://immunization-tracker-backend.herokuapp.com/api/staffs/:staff_id/immunization_edit_requests
 
 
@@ -285,7 +315,7 @@ Parameter :
 Return
   [
 	  {
-        "record_update_requests_id": "number",
+        "record_edit_request_id": "number",
         "patient_id": "number",
         "patient_username": "string",  
         "patient_first_name": "string",  
@@ -296,7 +326,39 @@ Return
         "vaccine_dose_month": "number",
         "appointed_clinic_id": "number",
         "appointed_clinic": "string",  
-        "update_request_note": "string",  
+        "record_edit_request_note": "string",  
+      },
+	...
+  ]
+```
+
+
+### Get patient immunization record edit requests by Patient - GET - RESTRICTED
+https://immunization-tracker-backend.herokuapp.com/api/staffs/:staff_id/immunization_edit_requests/:patient_id
+
+
+```
+Parameter : 
+
+"staff_id": "number" 
+"patient_id": "number" 
+
+```
+
+```
+Return
+  [
+	  {
+        "patient_id": "number",
+        "record_edit_request_id": "number",
+        "vaccine_dose_id": "number",
+        "vaccine_name": "string",  
+		"vaccine_dose_number": "number",
+		"vaccine_dose_month": "number",
+        "patient_first_name": "string",  
+        "patient_last_name": "string",  
+        "patient_username": "string",  
+        "record_edit_request_note": "string",  
       },
 	...
   ]
@@ -304,15 +366,48 @@ Return
 
 
 
-### UPDATE immunization records - UPDATE - RESTRICTED
+### Get patient immunization record edit request details by Patient - GET - RESTRICTED
+https://immunization-tracker-backend.herokuapp.com/api/staffs/:staff_id/immunization_edit_requests/:patient_id/:edit_request_id
+
+
+```
+Parameter : 
+
+"staff_id": "number" 
+"patient_id": "number" 
+"edit_request_id": "number" 
+
+```
+
+```
+Return
+  [
+	  {
+        "record_edit_request_id": "number",
+        "vaccine_dose_id": "number",
+        "vaccine_name": "string",  
+		"vaccine_dose_number": "number",
+		"vaccine_dose_month": "number",
+        "patient_id": "number",  
+        "patient_first_name": "string",  
+        "patient_last_name": "string",  
+        "patient_username": "string",  
+        "record_edit_request_note": "string",  
+      },
+	...
+  ]
+```
+
+
+### POST Vaccination Dose Edit Request - POST - RESTRICTED
 https://immunization-tracker-backend.herokuapp.com/api/patients/:patient_id/immunization_records/:vaccine_dose_id
 
 
 ```
 Arguments
   {
-    "vaccine_dose_id": “string",
-    "patient_id": “string"
+    "clinic_id": “number"
+    "note": “string",
   }
 ```
 
@@ -327,7 +422,9 @@ Parameter :
 ```
 Return
   [
-	 
-	...
+	{
+		"message": "string",  
+		"lastId": “number",
+    }
   ]
 ```

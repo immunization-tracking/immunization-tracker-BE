@@ -14,7 +14,10 @@ import { register, login, protect } from '../utils/auth'
 
 function setupRoutes(app){
 	// protected route
-// app.use('/api', protect)
+	// app.use('/api', protect)
+	
+	//  Check route,
+	// app.use('/api', protect)
 	
 	// Staffs
 	const staffRouter = express.Router()

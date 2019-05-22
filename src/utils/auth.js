@@ -64,7 +64,7 @@ export const protect = async (req, res, next) => {
   try {
     payload = await verifyToken(token)
   } catch (e) {
-    return res.status(401).json({message:e})
+    return res.status(401).json({message: 'You are not verified' })
   }
   //
   const tbl = payload.tbl

@@ -8,13 +8,14 @@ const serverErrorHandler = require('../middlewares/errorHandlers/serverErrorHand
 function setupStaffRoutes(router){
 	console.log('staffController', serverErrorHandler(staffController))
 	router.get("/", serverErrorHandler(staffController.getMany))
-	router.get("/:staff_id/immunization_edit_requests", serverErrorHandler(staffController.getImmunizationEditRequests))
 	router.post('/', verifyAddingStaffs, serverErrorHandler(staffController.createOne))
 	router.get('/:id', serverErrorHandler(staffController.getOne))
 	router.put('/:id', verifyUpdatingStaffs, serverErrorHandler(staffController.updateOne))
 	router.delete('/:id', serverErrorHandler(staffController.removeOne))
 	
-	
+	router.get("/:staff_id/immunization_edit_requests", serverErrorHandler(staffController.getImmunizationEditRequestsByClinic))
+	router.get("/:staff_id/immunization_edit_requests/:patient_id", serverErrorHandler(staffController.getImmunizationRecordRequestsByPatient))
+	router.get("/:staff_id/immunization_edit_requests/:patient_id/:edit_request_id", serverErrorHandler(staffController.getImmunizationRecordRequestDetail))
 }
 
 export default setupStaffRoutes
