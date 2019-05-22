@@ -298,6 +298,7 @@ Return
 ```
 
 
+
 ## Clinic / Staffs Endpoints
 
 ### Get patient immunization records edit requests by Clinic - GET - RESTRICTED
@@ -400,7 +401,7 @@ Return
 
 
 ### POST Vaccination Dose Edit Request - POST - RESTRICTED
-https://immunization-tracker-backend.herokuapp.com/api/patients/:patient_id/immunization_records/:vaccine_dose_id
+https://immunization-tracker-backend.herokuapp.com/api/patients/:patient_id/immunization_records/
 
 
 ```
@@ -408,6 +409,7 @@ Arguments
   {
     "clinic_id": “number"
     "note": “string",
+    "vaccine_dose_id": "number"
   }
 ```
 
@@ -415,7 +417,6 @@ Arguments
 Parameter : 
 
 "patient_id": "number"  
-"vaccine_dose_id": "number"
 
 ```
 

@@ -24,7 +24,7 @@ function getRoleTable(req){
 export const register = async (req, res) => {
   const role = getRoleTable(req)
   const hash = bcrypt.hashSync(req.body.password, 8)
-  const user = await db(role).insert({...req.body, password:hash})
+  const user = await db(role).insert({...req.body, password:hash}, 'id')
   return res.status(201).json(user)
 }
 

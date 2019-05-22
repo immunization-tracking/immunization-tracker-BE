@@ -25,7 +25,7 @@ export const getManyByProps = model => async (req, res) => {
 }
 
 export const createOne = model => async (req, res) => {
-   	const lastId = await db(model).insert(req.body)
+   	const lastId = await db(model).insert(req.body, 'id')
     res.status(201).json(lastId)
 }
 
@@ -190,14 +190,14 @@ export const getImmunizationEditRequestsByClinic = model => async (req, res) => 
 };
 
 export const saveImmunizationRecordRequest = model => async (req, res) => {
-    const {clinic_id, note} = req.body
+    const {clinic_id, vaccine_dose_id, note} = req.body
     const lastId = await db('immunization_edit_requests')
                                     .insert({
                                         clinic_id,
                                         note,
                                         patient_id: req.params.patient_id,
-                                        vaccine_dose_id: req.params.vaccine_dose_id,
-                                    })
+                                        vaccine_dose_id,
+                                    }, 'id')
     res.status(201).json({message: 'Immunization Record Request Saved', lastId: lastId[0]})
 };
 
