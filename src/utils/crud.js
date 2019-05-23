@@ -99,7 +99,7 @@ export const getImmunizationRecords = model => async (req, res) => {
 // http://localhost:3000/api/staffs/1/immunization_edit_requests/1/1
 export const getImmunizationRecordRequestDetail = model => async (req, res) => {
     const {staff_id, patient_id, edit_request_id} = req.params
-    const vaccineTemplate = await db('immunization_edit_requests as r')
+    const vaccineTemplate = await db('immunization_record_update_requests as r')
     .whereRaw('r.id = ?', edit_request_id)
     .where({patient_id: patient_id})
     .leftJoin('vaccine_doses_schedules as d', 'd.id', 'r.vaccine_dose_id')
@@ -129,7 +129,7 @@ export const getImmunizationRecordRequestDetail = model => async (req, res) => {
 
 // http://localhost:3000/api/staffs/1/immunization_edit_requests/1
 export const getImmunizationRecordRequestsByPatient = model => async (req, res) => {
-    const patientRequests = await db('immunization_edit_requests as r')
+    const patientRequests = await db('immunization_record_update_requests as r')
     .where({patient_id: req.params.patient_id})
     .leftJoin('vaccine_doses_schedules as d', 'd.id', 'r.vaccine_dose_id')
     .leftJoin('vaccines as v', 'v.id', 'd.vaccine_id')
@@ -158,36 +158,38 @@ export const getImmunizationRecordRequestsByPatient = model => async (req, res) 
 
 // http://localhost:3000/api/staffs/1/immunization_edit_requests
 export const getImmunizationEditRequestsByClinic = model => async (req, res) => {
-    console.log("getImmunizationEditRequests")
     const staff = await db('staffs')
     .where({id:req.params.staff_id})
     .first()
     
-    const editRequests = await db('immunization_edit_requests as i')
-    .where({clinic_id: staff.clinic_id})
-    .join('clinics as c', 'i.clinic_id', 'c.id')
-    .join('patients as p', 'p.id', 'i.patient_id')
-    .join('vaccine_doses_schedules as v', 'v.id', 'i.vaccine_dose_id')
-    .join('vaccines as n', 'n.id', 'v.vaccine_id')
-    .select(
-        'i.id as record_edit_request_id',
-        'i.patient_id',
-        'p.avatar as patient_avatar',
-        'p.username as patient_username',
-        'p.first_name as patient_first_name',
-        'p.last_name as patient_last_name',
-        'p.email as patient_email',
-        'v.id as vaccine_dose_id',
-        'n.fullname as vaccine_name',
-        'v.dose_number as vaccine_dose_number',
-        'v.due_month as vaccine_dose_month',
-        'c.id as appointed_clinic_id',
-        'c.name as appointed_clinic',
-        'i.note as record_edit_request_note',
-        
-    )
-  
+    console.log("staff",staff)
+    console.log("staff.clinic_id",staff.clinic_id)
     
+    const editRequests = await db('immunization_record_update_requests')
+    // const editRequests = await db('immunization_edit_requests as i')
+    .where({clinic_id: staff.clinic_id})
+    // .join('clinics as c', 'i.clinic_id', 'c.id')
+    // .join('patients as p', 'p.id', 'i.patient_id')
+    // .join('vaccine_doses_schedules as v', 'v.id', 'i.vaccine_dose_id')
+    // .join('vaccines as n', 'n.id', 'v.vaccine_id')
+    // .select(
+    //     'i.id as record_edit_request_id',
+    //     'i.patient_id',
+    //     'p.avatar as patient_avatar',
+    //     'p.username as patient_username',
+    //     'p.first_name as patient_first_name',
+    //     'p.last_name as patient_last_name',
+    //     'p.email as patient_email',
+    //     'v.id as vaccine_dose_id',
+    //     'n.fullname as vaccine_name',
+    //     'v.dose_number as vaccine_dose_number',
+    //     'v.due_month as vaccine_dose_month',
+    //     'c.id as appointed_clinic_id',
+    //     'c.name as appointed_clinic',
+    //     'i.note as record_edit_request_note',
+    // )
+  
+    // console.log('editRequest',editRequests)
     if (editRequests.length > 0){
         res.status(200).json(editRequests)
     }else{
@@ -197,7 +199,7 @@ export const getImmunizationEditRequestsByClinic = model => async (req, res) => 
 
 export const saveImmunizationRecordRequest = model => async (req, res) => {
     const {clinic_id, vaccine_dose_id, note} = req.body
-    const lastId = await db('immunization_edit_requests')
+    const lastId = await db('immunization_record_update_requests')
                                     .insert({
                                         clinic_id,
                                         note,
