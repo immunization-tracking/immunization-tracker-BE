@@ -112,9 +112,11 @@ export const getImmunizationRecordRequestDetail = model => async (req, res) => {
         'd.dose_number as vaccine_dose_number',
         'd.due_month as vaccine_dose_month',
         'p.id as patient_id',
+        'p.avatar as patient_avatar',
+        'p.username as patient_username',
         'p.first_name as patient_first_name',
         'p.last_name as patient_last_name',
-        'p.username as patient_username',
+        'p.email as patient_email',
         'r.note as record_edit_request_note',
     )
 
@@ -139,9 +141,11 @@ export const getImmunizationRecordRequestsByPatient = model => async (req, res) 
         'v.fullname as vaccine_name',
         'd.dose_number as vaccine_dose_number',
         'd.due_month as vaccine_dose_month',
+        'p.avatar as patient_avatar',
+        'p.username as patient_username',
         'p.first_name as patient_first_name',
         'p.last_name as patient_last_name',
-        'p.username as patient_username',
+        'p.email as patient_email',
         'r.note as record_edit_request_note',
     )
   
@@ -168,9 +172,11 @@ export const getImmunizationEditRequestsByClinic = model => async (req, res) => 
     .select(
         'i.id as record_edit_request_id',
         'i.patient_id',
+        'p.avatar as patient_avatar',
         'p.username as patient_username',
         'p.first_name as patient_first_name',
         'p.last_name as patient_last_name',
+        'p.email as patient_email',
         'v.id as vaccine_dose_id',
         'n.fullname as vaccine_name',
         'v.dose_number as vaccine_dose_number',
