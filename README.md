@@ -406,6 +406,32 @@ Return
 ```
 
 
+### POST patient immunization record - POST - RESTRICTED
+https://immunization-tracker-backend.herokuapp.com/api/immunization_records
+
+
+```
+Parameter : 
+
+"received_date": "Date" 
+"patient_id": "number" 
+"clinic_id": "number"
+"note:  "string",  
+"vaccine_dose_id:  "number",  
+
+```
+
+```
+Return
+  [
+	{
+		"message": "string",  
+		"lastId": “number",
+    }
+  ]
+```
+
+
 ### POST Vaccination Dose Edit Request - POST - RESTRICTED
 https://immunization-tracker-backend.herokuapp.com/api/patients/:patient_id/immunization_records/
 

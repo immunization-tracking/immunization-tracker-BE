@@ -95,6 +95,42 @@ export const getImmunizationRecords = model => async (req, res) => {
     }
 };
 
+
+// http://localhost:3000/api/staffs/1/immunization_edit_requests/1/1
+// export const postImmunizationRecord = model => async (req, res) => {
+//     // const {staff_id, patient_id, edit_request_id} = req.params
+//     // const vaccineTemplate = await db('immunization_records')
+//     //                                 .insert("")
+//
+//     // .whereRaw('r.id = ?', edit_request_id)
+//     // .where({patient_id: patient_id})
+//     // .leftJoin('vaccine_doses_schedules as d', 'd.id', 'r.vaccine_dose_id')
+//     // .leftJoin('vaccines as v', 'v.id', 'd.vaccine_id')
+//     // .leftJoin('patients as p', 'p.id', 'r.patient_id')
+//     // .select(
+//     //     'r.id as record_edit_request_id',
+//     //     'd.id as vaccine_dose_id',
+//     //     'v.fullname as vaccine_name',
+//     //     'd.dose_number as vaccine_dose_number',
+//     //     'd.due_month as vaccine_dose_month',
+//     //     'p.id as patient_id',
+//     //     'p.avatar as patient_avatar',
+//     //     'p.username as patient_username',
+//     //     'p.first_name as patient_first_name',
+//     //     'p.last_name as patient_last_name',
+//     //     'p.email as patient_email',
+//     //     'r.note as record_edit_request_note',
+//     // )
+//
+//     if (vaccineTemplate.length > 0){
+//         res.status(201).json(vaccineTemplate)
+//     }else{
+//         res.status(404).json({ message: 'this record does not exist' });
+//     }
+// };
+
+
+
 //
 // http://localhost:3000/api/staffs/1/immunization_edit_requests/1/1
 export const getImmunizationRecordRequestDetail = model => async (req, res) => {
@@ -218,4 +254,5 @@ export const crudControllers = model => ({
   getImmunizationRecordRequestsByPatient:getImmunizationRecordRequestsByPatient(model),
   getImmunizationRecordRequestDetail:getImmunizationRecordRequestDetail(model),
   saveImmunizationRecordRequest:saveImmunizationRecordRequest(model)
+    // postImmunizationRecord:postImmunizationRecord(model)
 })
