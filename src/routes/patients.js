@@ -12,7 +12,6 @@ function setupPatientRoutes(router){
 	router.get("/:id", serverErrorHandler(patientController.getFamiliesByEmail))
 	router.get("/:patient_id/immunization_records/", serverErrorHandler(patientController.getImmunizationRecords))
 	router.post("/:patient_id/immunization_records/", serverErrorHandler(patientController.saveImmunizationRecordRequest))
-	// router.post('/', verifyAddingPatients, serverErrorHandler(patientController.createOne))
 	router.put('/:id', verifyUpdatingPatients, serverErrorHandler(patientController.updateOne))
 	router.delete('/:id', serverErrorHandler(patientController.removeOne))
 	

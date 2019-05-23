@@ -183,9 +183,9 @@ export const getImmunizationEditRequestsByClinic = model => async (req, res) => 
   
     
     if (editRequests.length > 0){
-        res.status(201).json(editRequests)
+        res.status(200).json(editRequests)
     }else{
-        res.status(404).json({ message: 'this record does not exist' });
+        res.status(200).json({ message: 'There is no record edit request at this moment' });
     }
 };
 
