@@ -130,6 +130,18 @@ export const getImmunizationRecords = model => async (req, res) => {
 // };
 
 
+export const saveImmunizationRecord = model => async (req, res) => {
+    const {request_id} = req.body
+    const lastId = await db('immunization_records').insert(req.body, 'id')
+    
+    await db('immunization_record_update_requests')
+                .where({id:request_id})
+                .del(req.body)
+    
+    // res.status(200).json(list)
+    // res.status(200).json({message: `${count} ${count > 1 ? 'records' : 'record'} deleted`})
+    res.status(201).json({message: 'Immunization Record Updated', lastId: lastId[0]})
+}
 
 //
 // http://localhost:3000/api/staffs/1/immunization_edit_requests/1/1
@@ -222,7 +234,7 @@ export const getImmunizationEditRequestsByClinic = model => async (req, res) => 
     )
   
     if (editRequests.length > 0){
-        res.status(200).json(editRequests)
+        res.status(200).json({editRequests})
     }else{
         res.status(200).json({ message: 'There is no record edit request at this moment' });
     }
@@ -253,6 +265,6 @@ export const crudControllers = model => ({
     getImmunizationEditRequestsByClinic:getImmunizationEditRequestsByClinic(model),
   getImmunizationRecordRequestsByPatient:getImmunizationRecordRequestsByPatient(model),
   getImmunizationRecordRequestDetail:getImmunizationRecordRequestDetail(model),
-  saveImmunizationRecordRequest:saveImmunizationRecordRequest(model)
-    // postImmunizationRecord:postImmunizationRecord(model)
+  saveImmunizationRecordRequest:saveImmunizationRecordRequest(model),
+    saveImmunizationRecord:saveImmunizationRecord(model)
 })
