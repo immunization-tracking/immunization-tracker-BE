@@ -162,34 +162,29 @@ export const getImmunizationEditRequestsByClinic = model => async (req, res) => 
     .where({id:req.params.staff_id})
     .first()
     
-    console.log("staff",staff)
-    console.log("staff.clinic_id",staff.clinic_id)
-    
-    const editRequests = await db('immunization_record_update_requests')
-    // const editRequests = await db('immunization_edit_requests as i')
+    const editRequests = await db('immunization_record_update_requests as i')
     .where({clinic_id: staff.clinic_id})
-    // .join('clinics as c', 'i.clinic_id', 'c.id')
-    // .join('patients as p', 'p.id', 'i.patient_id')
-    // .join('vaccine_doses_schedules as v', 'v.id', 'i.vaccine_dose_id')
-    // .join('vaccines as n', 'n.id', 'v.vaccine_id')
-    // .select(
-    //     'i.id as record_edit_request_id',
-    //     'i.patient_id',
-    //     'p.avatar as patient_avatar',
-    //     'p.username as patient_username',
-    //     'p.first_name as patient_first_name',
-    //     'p.last_name as patient_last_name',
-    //     'p.email as patient_email',
-    //     'v.id as vaccine_dose_id',
-    //     'n.fullname as vaccine_name',
-    //     'v.dose_number as vaccine_dose_number',
-    //     'v.due_month as vaccine_dose_month',
-    //     'c.id as appointed_clinic_id',
-    //     'c.name as appointed_clinic',
-    //     'i.note as record_edit_request_note',
-    // )
+    .join('clinics as c', 'i.clinic_id', 'c.id')
+    .join('patients as p', 'p.id', 'i.patient_id')
+    .join('vaccine_doses_schedules as v', 'v.id', 'i.vaccine_dose_id')
+    .join('vaccines as n', 'n.id', 'v.vaccine_id')
+    .select(
+        'i.id as record_edit_request_id',
+        'i.patient_id',
+        'p.avatar as patient_avatar',
+        'p.username as patient_username',
+        'p.first_name as patient_first_name',
+        'p.last_name as patient_last_name',
+        'p.email as patient_email',
+        'v.id as vaccine_dose_id',
+        'n.fullname as vaccine_name',
+        'v.dose_number as vaccine_dose_number',
+        'v.due_month as vaccine_dose_month',
+        'c.id as appointed_clinic_id',
+        'c.name as appointed_clinic',
+        'i.note as record_edit_request_note',
+    )
   
-    // console.log('editRequest',editRequests)
     if (editRequests.length > 0){
         res.status(200).json(editRequests)
     }else{
