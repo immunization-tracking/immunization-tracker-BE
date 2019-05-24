@@ -74,7 +74,7 @@ export const getImmunizationRecords = model => async (req, res) => {
     .leftJoin('clinics as c', 'i.clinic_id', 'c.id')
     .leftJoin('vaccines as n', 'v.vaccine_id', 'n.id')
     .select(
-        'v.id as vaccine_does_id',
+        'v.id as vaccine_dose_id',
         'n.fullname as vaccine_name',
         'v.dose_number as vaccine_dose_number',
         'v.due_month as vaccine_dose_month',
