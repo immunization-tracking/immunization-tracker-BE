@@ -44,7 +44,7 @@ export const updateOne = model => async (req, res) => {
 export const removeOne = model => async (req, res) => {
     const count  = await db(model)
                           .where({id:req.params.id})
-                          .del(req.body)
+                          .del()
     if (count > 0){
       res.status(200).json({message: `${count} ${count > 1 ? 'records' : 'record'} deleted`})
     }else{
@@ -103,10 +103,10 @@ export const saveImmunizationRecord = model => async (req, res) => {
     const {request_id} = req.body
     const lastId = await db('immunization_records').insert(req.body, 'id')
     
-    await db('immunization_record_update_requests')
-                .where({id:request_id})
-                .del(req.body)
-    
+    // await db('immunization_record_update_requests')
+    //             .where({id:request_id})
+    //             .del()
+
     // res.status(200).json(list)
     // res.status(200).json({message: `${count} ${count > 1 ? 'records' : 'record'} deleted`})
     res.status(201).json({message: 'Immunization Record Updated', lastId: lastId[0]})
@@ -164,7 +164,7 @@ export const getImmunizationRecordRequestsByPatient = model => async (req, res) 
         'p.last_name as patient_last_name',
         'p.email as patient_email',
         'r.note as record_edit_request_note',
-    )
+    ).distinct()
   
     if (patientRequests.length > 0){
         res.status(201).json(patientRequests)

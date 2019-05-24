@@ -8,8 +8,8 @@ import setupVaccineDosesSchedulesRoutes from './vaccine_doses_schedules'
 import setupImmunizationEditRequestRoutes from './immunization_edit_requests'
 
 const serverErrorHandler = require('../middlewares/errorHandlers/serverErrorHandler');
-const verifyRequestBodyOnRegister = require('../middlewares/errorHandlers/auth/verifyRequestBodyOnPatientRegister');
-const verifyRequestBodyOnLogin = require('../middlewares/errorHandlers/auth/verifyRequestBodyOnPatientLogin');
+const verifyRequestBodyOnRegister = require('../middlewares/errorHandlers/auth/verifyRequestBodyOnRegister');
+const verifyRequestBodyOnLogin = require('../middlewares/errorHandlers/auth/verifyRequestBodyOnLogin');
 import { register, login, protect } from '../utils/auth'
 
 function setupRoutes(app){
