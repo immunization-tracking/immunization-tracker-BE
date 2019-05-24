@@ -213,11 +213,9 @@ export const saveImmunizationRecordRequest = model => async (req, res) => {
     const {clinic_id, vaccine_dose_id, note} = req.body
     const lastId = await db('immunization_record_update_requests')
                                     .insert({
-                                        clinic_id,
-                                        note,
+                                        ...req.body,
                                         patient_id: req.params.patient_id,
-                                        vaccine_dose_id,
-                                    }, 'id')
+                                    }, )
     res.status(201).json({message: 'Immunization Record Request Saved', lastId: lastId[0]})
 };
 
