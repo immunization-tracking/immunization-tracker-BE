@@ -13,12 +13,14 @@ exports.up = function(knex, Promise) {
 		tbl.string('email')
 		.notNullable()
 		
-		tbl.boolean('isChild')
+		tbl.boolean('is_child')
 		.defaultTo(false)
 		
 		tbl.string('first_name', 125)
 		tbl.string('last_name',125)
 		tbl.integer('ss_id')
+		tbl.date('birthday')
+		
 		tbl.integer('phone')
 		tbl.string('avatar')
 	})

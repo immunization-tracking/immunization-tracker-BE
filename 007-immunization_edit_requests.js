@@ -9,7 +9,7 @@ const createFakerRecords = () => ({
 
 exports.seed = function(knex, Promise) {
   // Deletes ALL existing entries
-  return knex('immunization_edit_requests').truncate()
+  return knex('immunization_record_update_requests').truncate()
   .then(function () {
     // Inserts seed entries
     const fakerRecords = []
@@ -17,6 +17,6 @@ exports.seed = function(knex, Promise) {
     for (let i = 0; i < 20; i++) {
       fakerRecords.push(createFakerRecords());
     }
-    return knex('immunization_edit_requests').insert(fakerRecords)
+    return knex('immunization_record_update_requests').insert(fakerRecords)
   });
 };

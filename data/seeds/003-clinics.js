@@ -13,7 +13,7 @@ exports.seed = function(knex, Promise) {
     // Inserts seed entries
     const fakeClinics = []
     
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 10; i++) {
       fakeClinics.push(createFakeClinic());
     }
     return knex('clinics').insert(fakeClinics)

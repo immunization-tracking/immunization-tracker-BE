@@ -13,7 +13,7 @@ exports.up = function(knex, Promise) {
 		.notNullable()
 		.references('id')
 		.inTable('patients')
-		.onDelete('CASCADE')
+		.onDelete('RESTRICT')
 		.onUpdate('CASCADE')
 		
 		tbl.integer('clinic_id')
@@ -21,7 +21,7 @@ exports.up = function(knex, Promise) {
 		.notNullable()
 		.references('id')
 		.inTable('clinics')
-		.onDelete('Restrict')
+		.onDelete('RESTRICT')
 		.onUpdate('CASCADE')
 		
 		
@@ -30,8 +30,11 @@ exports.up = function(knex, Promise) {
 		.notNullable()
 		.references('id')
 		.inTable('vaccine_doses_schedules')
-		.onDelete('Restrict')
+		.onDelete('RESTRICT')
 		.onUpdate('CASCADE')
+		
+		// tbl.timestamp('created_at').defaultTo(knex.fn.now())
+		
 	})
 };
 

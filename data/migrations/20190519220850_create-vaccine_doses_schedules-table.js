@@ -14,7 +14,7 @@ exports.up = function(knex, Promise) {
 		.notNullable()
 		.references('id')
 		.inTable('vaccines')
-		.onDelete('CASCADE')
+		.onDelete('RESTRICT')
 		.onUpdate('CASCADE')
 	})
 };

@@ -11,6 +11,7 @@ const createFakerUsers = (idx) => ({
   avatar: faker.image.avatar(),
   password: hashedPassword,
   phone: faker.phone.phoneNumber(),
+  birthday: faker.date.past(),
   ss_id: Math.floor(Math.random(9))
 });
 

@@ -4,7 +4,7 @@ export const getOne = model => async (req, res) => {
     const items = await db(model)
           .where({id:req.params.id})
   
-  console.log(items)
+  console.log('items', items)
     if (items.length > 0){
       res.status(200).json(items[0])
     }else{
@@ -115,7 +115,7 @@ export const saveImmunizationRecord = model => async (req, res) => {
 //
 // http://localhost:3000/api/staffs/1/immunization_edit_requests/1/1
 export const getImmunizationRecordRequestDetail = model => async (req, res) => {
-    const {staff_id, patient_id, edit_request_id} = req.params
+    const {id, patient_id, edit_request_id} = req.params
     const vaccineTemplate = await db('immunization_record_update_requests as r')
     .whereRaw('r.id = ?', edit_request_id)
     .where({patient_id: patient_id})
@@ -176,8 +176,12 @@ export const getImmunizationRecordRequestsByPatient = model => async (req, res) 
 // http://localhost:3000/api/staffs/1/immunization_edit_requests
 export const getImmunizationEditRequestsByClinic = model => async (req, res) => {
     const staff = await db('staffs')
-    .where({id:req.params.staff_id})
+    .where({id:req.params.id})
     .first()
+    
+    if (!staff){
+        return  res.status(404).json({ message: 'this staff does not exist' });
+    }
     
     const editRequests = await db('immunization_record_update_requests as i')
     .where({clinic_id: staff.clinic_id})

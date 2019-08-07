@@ -3,7 +3,7 @@ exports.up = function(knex, Promise) {
 	return knex.schema.createTable('immunization_record_update_requests', function (tbl) {
 		tbl.increments()
 		
-		tbl.date('note')
+		tbl.string('note')
 		
 		tbl.integer('clinic_id')
 		.unsigned()
@@ -18,7 +18,7 @@ exports.up = function(knex, Promise) {
 		.notNullable()
 		.references('id')
 		.inTable('vaccine_doses_schedules')
-		.onDelete('CASCADE')
+		.onDelete('RESTRICT')
 		.onUpdate('CASCADE')
 		
 		

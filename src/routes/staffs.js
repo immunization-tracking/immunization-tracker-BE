@@ -13,9 +13,9 @@ function setupStaffRoutes(router){
 	router.put('/:id', verifyUpdatingStaffs, serverErrorHandler(staffController.updateOne))
 	router.delete('/:id', serverErrorHandler(staffController.removeOne))
 	
-	router.get("/:staff_id/immunization_edit_requests", serverErrorHandler(staffController.getImmunizationEditRequestsByClinic))
-	router.get("/:staff_id/immunization_edit_requests/:patient_id", serverErrorHandler(staffController.getImmunizationRecordRequestsByPatient))
-	router.get("/:staff_id/immunization_edit_requests/:patient_id/:edit_request_id", serverErrorHandler(staffController.getImmunizationRecordRequestDetail))
+	router.get("/:id/immunization_edit_requests", serverErrorHandler(staffController.getImmunizationEditRequestsByClinic))
+	router.get("/:id/immunization_edit_requests/:patient_id", serverErrorHandler(staffController.getImmunizationRecordRequestsByPatient))
+	router.get("/:id/immunization_edit_requests/:patient_id/:edit_request_id", serverErrorHandler(staffController.getImmunizationRecordRequestDetail))
 	
 	// router.post("/:staff_id/immunization_edit_requests/:patient_id/:edit_request_id", serverErrorHandler(staffController.postImmunizationRecord))
 }
